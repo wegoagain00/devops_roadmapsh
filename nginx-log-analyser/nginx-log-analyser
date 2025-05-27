@@ -1,0 +1,31 @@
+#!/bin/bash
+
+
+top_5_ip(){
+echo 'Top 5 IP ADDRESSES WITH MOST REQUESTS'
+awk '{print $1}' nginx-access.log | sort | uniq -c | sort -nr | head -5 | awk '{print $2 " - " $1 " requests"}'
+}
+
+top_5_paths(){
+echo 'Top 5 PATHS WITH MOST REQUESTS'
+awk '{print $7}' nginx-access.log | sort | uniq -c | sort -nr | head -5 | awk '{print $2 " - " $1 " requests"}'
+}
+
+top_5_status(){
+echo 'Top 5 RESPONSE STATUSES WITH MOST REQUESTS'
+awk '{print $9}' nginx-access.log | sort | uniq -c | sort -nr | head -5 | awk '{print $2 " - " $1 " requests"}'
+}
+
+top_5_agents(){
+echo 'Top 5 USER AGENTS  WITH MOST REQUESTS'
+awk '{print $12}' nginx-access.log | sort | uniq -c | sort -nr | head -5 | awk '{print $2 " - " $1 " requests"}'
+}
+
+
+top_5_ip
+echo ""
+top_5_paths
+echo ""
+top_5_status
+echo ""
+top_5_agents
