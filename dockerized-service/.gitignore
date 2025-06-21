@@ -1,0 +1,6 @@
+node_modules/
+*.log
+.terraform/
+*.tfplan
+terraform.tfstate
+terraform.tfstate.backup
