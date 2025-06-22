@@ -15,7 +15,7 @@ resource "aws_security_group" "ec2_security_group" {
   name        = "web_server_security_group"
   description = "Allow SSH and HTTP inbound traffic"
 
-  # Ingress (inbound) rules
+  # Ingress (inbound) rules (IF YOURE MAPPING localhost:3000 (remember to MAP ingress to your location))
   # This rule allows SSH access from anywhere (0.0.0.0/0)
   ingress {
     from_port   = 22
@@ -57,7 +57,7 @@ resource "aws_instance" "web_server" {
   ami           = "ami-044415bb13eee2391" # Example AMI for Ubuntu 20.04 LTS 
   instance_type = "t2.micro"              # Free tier eligible instance type
 
-  # Associate the instance with the security group created above
+  # Associate the instance with the security group created above (ALLOW)
   vpc_security_group_ids = [aws_security_group.ec2_security_group.id]
 
   key_name = "aws-test"
