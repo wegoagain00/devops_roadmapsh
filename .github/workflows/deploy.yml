@@ -37,7 +37,7 @@ jobs:
         run: |
           # Define the full image name including Docker Hub username and repository name
           # This will be in the format: your_docker_username/your_image_name
-          IMAGE_TAG="${{ env.DOCKER_HUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest"
+          IMAGE_TAG="${{ env.DOCKER_HUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:1.0"
 
           # Build the Docker image
           docker build -t $IMAGE_TAG .
