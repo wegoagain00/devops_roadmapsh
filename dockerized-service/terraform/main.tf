@@ -60,11 +60,29 @@ resource "aws_instance" "web_server" {
   # Associate the instance with the security group created above
   vpc_security_group_ids = [aws_security_group.ec2_security_group.id]
 
+  key_name = "aws-test"
+
   # User data to run commands on instance launch
   # The instance will still update its package list.
   user_data = <<-EOF
               #!/bin/bash
               sudo apt-get update -y
+
+              # Install Docker
+              sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+              curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+              echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+              sudo apt-get update -y
+              sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+
+              # Add ubuntu user to the docker group so it can run docker commands without sudo
+              sudo usermod -aG docker ubuntu
+              # Note: For this group change to take effect for the 'ubuntu' user
+              # without a reboot, you would typically need to log out and log back in,
+              # or run 'newgrp docker'. In a user_data script, this will apply
+              # for subsequent SSH sessions.
+
+              echo "Docker installation complete."
               EOF
 
   # Tags are key-value pairs that help you manage, identify, organize,
