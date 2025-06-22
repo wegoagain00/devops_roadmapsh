@@ -37,10 +37,10 @@ jobs:
         run: |
           # Define the full image name including Docker Hub username and repository name
           # This will be in the format: your_docker_username/your_image_name
-          IMAGE_TAG="${{ env.DOCKER_HUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:1.0"
+          IMAGE_TAG="${{ env.DOCKER_HUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest"
 
-          # Build the Docker image
-          docker build -t $IMAGE_TAG .
+          # Build the Docker image (remember add path to where its located( i had to moved workflow out to root repository))
+          docker build -t $IMAGE_TAG ./devops_roadmapsh/dockerized-service
 
           # Push the Docker image to Docker Hub
           docker push $IMAGE_TAG
